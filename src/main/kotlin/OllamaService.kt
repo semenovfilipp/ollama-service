@@ -56,13 +56,7 @@ class OllamaService(
         return toChatResult(olamaResponse)
     }
 
-    fun toOlamaRequest(req: ChatCompletionRequest): OllamaRequest {
-        return OllamaRequest(
-            model = req.model ?: "llama2",
-            prompt = req.messages.first().content,
-            stream = false
-        )
-    }
+
 
     fun sendMessageToOllama(request: OllamaRequest): OllamaResponse {
         val request = Request.Builder()
@@ -77,6 +71,20 @@ class OllamaService(
         return JSON.parse(response.body!!.string(), OllamaResponse::class.java)
     }
 
+    /*
+  * Request в Ollama из Caila
+  */
+    fun toOlamaRequest(req: ChatCompletionRequest): OllamaRequest {
+        return OllamaRequest(
+            model = req.model ?: "llama2",
+            prompt = req.messages.first().content,
+            stream = false
+        )
+    }
+
+    /*
+     * Response из Ollama и передача его в Caila
+     */
 
     fun toChatResult(res: OllamaResponse): ChatCompletionResult {
         return ChatCompletionResult(
@@ -95,6 +103,9 @@ class OllamaService(
     }
 
 
+    /*
+     * Пример запроса к модели
+     */
     companion object {
         val REQUEST_EXAMPLE = ChatCompletionRequest(
             messages = listOf(
@@ -103,7 +114,7 @@ class OllamaService(
             )
         )
         val RESPONSE_EXAMPLE = ChatCompletionResult(
-            model = "yandex-gpt-lite",
+            model = "llama2",
             choices = listOf(
                 ChatCompletionChoice(
                     message = ChatMessage(

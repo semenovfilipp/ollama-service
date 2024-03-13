@@ -4,11 +4,11 @@ while [[ "$(curl -s -o /dev/null -w '%{http_code}\n' $ES_URL)" != "200" ]]; do
     sleep 1
 done
 
-nohup ollama run gemma:2b > ollama_run_gemma:2b.log 2>&1 &
+nohup ollama run $OLLAMA_MODEL > ollama_run_${OLLAMA_MODEL}.log 2>&1 &
 
 wait
 
-java -cp '*:lib/*' OllamaServiceKt > ollama_service.log 2>&1 &
+java -cp '*:lib/*' OllamaServiceKt
 
 
 
