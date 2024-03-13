@@ -10,8 +10,8 @@ BUILD_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 BRANCH_NAME_LOWER=$(echo "$BUILD_BRANCH" | tr '[:upper:]' '[:lower:]')
 
 ## Other environment
-#SECRET=$(LC_CTYPE=C tr -dc 'a-z0-9' </dev/urandom | head -c 24)
-SECRET=p8smccsnrr6ogzamx6sx7bfp
+SECRET=$(LC_CTYPE=C tr -dc 'a-z0-9' </dev/urandom | head -c 24)
+#SECRET=p8smccsnrr6ogzamx6sx7bfp
 
 # Linux
 #SECRET_FILE=~/.mlp-secret-$SERVICE_NAME

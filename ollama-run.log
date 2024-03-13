@@ -1,0 +1,4 @@
+[?25l⠙ [?25h[?25l[2K[1G⠹ [?25h[?25l[2K[1G⠸ [?25h[?25l[2K[1G⠼ [?25h[?25l[2K[1G⠴ [?25h[?25l[?25l[2K[1G[?25h[2K[1G[?25hError: Unable to load dynamic library: Unable to load dynamic server library: dlopen(/var/folders/wk/sjrjv4pn5kbb3j7_6knl502c0000gq/T/ollama2041278622/cpu/libext_server.dylib, 6): Symbol not found: ___darwin_check_fd_set_overflow
+  Referenced from: /var/folders/wk/sjrjv4pn5kbb3j7_6knl502c0000gq/T/ollama2041278622/cpu/libext_server.dylib (which was built for Mac OS X 11.3)
+  Expected in: /usr/lib/libSystem.B.dylib
+ in /var/folders/wk/sjrjv4pn5kbb3j7_6knl502c0000gq/T/ollama2041278622/cpu/libext_server.dylib
