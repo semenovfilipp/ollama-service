@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 RUN apt update
 RUN apt install -y curl
+# вероятно косяк с
 RUN curl -fsSL https://ollama.com/install.sh | sh
 RUN apt install openjdk-17-jdk -y
 

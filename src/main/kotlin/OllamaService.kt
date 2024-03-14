@@ -40,7 +40,7 @@ class OllamaService(
 ) {
     private val MEDIA_TYPE_JSON = "application/json".toMediaType()
     private val httpClient = OkHttpClient.Builder()
-        .readTimeout(120, TimeUnit.SECONDS)
+        .readTimeout(300, TimeUnit.SECONDS)
         .build()
 
     private val URL = "http://localhost:11434/api/generate"
