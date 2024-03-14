@@ -2,10 +2,11 @@
 nohup ollama serve > ollama-serv.log 2>&1 &
 
 echo "Running Ollama..."
+MODEL=$OLLAMA_MODEL
 
 # Ожидание, пока ollama serve полностью загрузится
 while [ "$(curl -s -o /dev/null -w '%{http_code}\n' "localhost:11434")" != "200" ]; do
-    echo "Waiting for ollama serve to start..."
+    echo "Waiting for $MODEL serve to start..."
     sleep 1
 done
 
@@ -14,41 +15,29 @@ sleep 3
 
 # Загрузка модели для ollama run llama2
 echo "Downloading model for Ollama..."
-nohup ollama run llama2 > ollama-run.log 2>&1 &
+nohup ollama run $MODEL > ollama-run.log 2>&1 &
 
 # Ожидание, пока ollama run llama2 начнет загрузку
-echo "Waiting for model llama2 to start..."
+echo "Waiting for model to start....."
 attempt=1
 while [ $attempt -le 600 ]; do
     current_status=$(tail -n 1 ollama-run.log)  # Читаем последнюю строку из лога ollama-run
     echo "$current_status"  # Выводим статус загрузки в консоль
 
-    # Проверка, началась ли загрузка модели
-    if echo "$current_status" | grep -q "Downloading model..."; then
-        echo "Model loading started."
-        break
-    fi
-
+response=$(curl -s -o /dev/null -w '%{http_code}\n' "http://localhost:11434/api/generate" -d "{\"model\": \"$MODEL\", \"prompt\":\"Some\"}")
+      if [ "$response" = "200" ]; then
+           echo "Model started successfully!"
+           break
+       fi
     sleep 1
     attempt=$((attempt + 1))
 done
 
-# Ожидание, пока ollama run llama2 полностью загрузится
-echo "Waiting for model llama2 to finish downloading..."
-attempt=1
-while [ $attempt -le 180 ]; do
-    response=$(curl -s -o /dev/null -w '%{http_code}\n' "http://localhost:11434/api/generate" -d '{"model": "llama2", "prompt":"Some"}')
-    if [ "$response" = "200" ]; then
-        echo "ollama run llama2 started successfully!"
-        break
-    fi
-    sleep 1
-    attempt=$((attempt + 1))
-done
+
 
 # Если загрузка не удалась за отведенное время, выводим сообщение об ошибке
 if [ $attempt -gt 180 ]; then
-    echo "Failed to start ollama run llama2."
+    echo "Failed to start Ollama model."
 fi
 
 

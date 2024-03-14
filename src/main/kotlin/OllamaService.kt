@@ -41,8 +41,6 @@ class OllamaService(
     private val MEDIA_TYPE_JSON = "application/json".toMediaType()
     private val httpClient = OkHttpClient.Builder()
         .readTimeout(120, TimeUnit.SECONDS)
-        .writeTimeout(120,TimeUnit.SECONDS)
-        .connectTimeout(120,TimeUnit.SECONDS)
         .build()
 
     private val URL = "http://localhost:11434/api/generate"
@@ -76,7 +74,7 @@ class OllamaService(
   */
     fun toOlamaRequest(req: ChatCompletionRequest): OllamaRequest {
         return OllamaRequest(
-            model = req.model ?: "llama2",
+            model = req.model ?: "gemma:2b",
             prompt = req.messages.first().content,
             stream = false
         )
@@ -114,7 +112,7 @@ class OllamaService(
             )
         )
         val RESPONSE_EXAMPLE = ChatCompletionResult(
-            model = "llama2",
+            model = "gemma:2b",
             choices = listOf(
                 ChatCompletionChoice(
                     message = ChatMessage(
